@@ -1,0 +1,48 @@
+name: 'The name of your action here'
+description: 'Provide a description here'
+author: 'Your name or organization here'
+
+# Define your inputs here.
+inputs:
+  token:
+    description: >
+      Personal access token (PAT) used to fetch the repository. The PAT is configured
+      with the local git config, which enables your scripts to run authenticated git
+      commands. The post-job step removes the PAT.
+
+      We recommend using a service account with the least permissions necessary.
+      Also when generating a new PAT, select the least scopes necessary.
+
+      [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    required: true
+    default: ${{ github.token }}
+  name:
+    description: >
+      The name of the Control Group to create. Must be unique within the runner machine and must not already exist.
+    required: true
+  cpu_shares:
+    description: >
+      The relative CPU shares to assign to the Control Group. The value must be between 2 and 262144.
+    required: false
+    default: ''
+  memory_limit:
+    description: >
+      The memory limit to assign to the Control Group. The value must be between 4M and the maximum memory available.
+    required: false
+    default: ''
+  memory_swap_limit:
+    description: >
+      The swap limit to assign to the Control Group. The value must be between 4M and the maximum memory available.
+    required: false
+    default: ''
+
+
+outputs:
+  name:
+    description: >
+      The name of the Control Group that was created.
+  
+
+runs:
+  using: node20
+  main: dist/main/index.mjs
